@@ -1,0 +1,28 @@
+{
+    "name": "php/imi-test",
+    "type": "project",
+    "description": "imi test",
+    "require": {
+        "php": "^7.4",
+        "yurunsoft/imi": "~1.2",
+        "symfony/polyfill-php74": "^1",
+        "symfony/polyfill-php80": "^1",
+        "symfony/var-dumper": "^5.1"
+    },
+    "require-dev": {
+        "swoole/ide-helper": "^4.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "ImiApp\\": "./"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "platform-check": "php-only",
+        "platform": {
+        }
+    }
+}
