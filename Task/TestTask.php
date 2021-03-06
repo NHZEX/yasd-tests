@@ -1,9 +1,9 @@
 <?php
-namespace ImiApp\Task;
+namespace MyApp\Task;
 
-use Imi\Task\TaskParam;
 use Imi\Task\Annotation\Task;
 use Imi\Task\Interfaces\ITaskHandler;
+use Imi\Task\TaskParam;
 use Swoole\Server;
 
 /**

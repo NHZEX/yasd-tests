@@ -4,10 +4,14 @@ use Imi\Db\Pool\CoroutineDbPool;
 use Imi\Db\Pool\SyncDbPool;
 use Imi\Redis\CoroutineRedisPool;
 use Imi\Redis\SyncRedisPool;
+use MyApp\Exception\ValidatorException;
+use function MyApp\env;
+use function MyApp\root_path;
 
 return [
     // 项目根命名空间
-    'namespace'    =>    'ImiApp',
+    'namespace'    =>    'MyApp',
+    'runtimePath'  =>    root_path('.runtime'),
 
     // 配置文件
     'configs'    =>    [
@@ -16,8 +20,9 @@ return [
 
     // 扫描目录
     'beanScan'    =>    [
-        'ImiApp\Listener',
-        'ImiApp\Task',
+        'MyApp\Listener',
+        'MyApp\Task',
+        'MyApp\Service',
     ],
 
     // 组件命名空间
@@ -26,13 +31,14 @@ return [
 
     // 主服务器配置
     'mainServer'    =>    [
-        'namespace'    =>    'ImiApp\ApiServer',
+        'namespace'    =>    'MyApp\MainServer',
         'type'        =>    Imi\Server\Type::HTTP,
         'host'        =>    '0.0.0.0',
-        'port'        =>    8080,
+        'port'        =>    9988,
         'configs'    =>    [
             // 'worker_num'        =>  8,
             // 'task_worker_num'   =>  16,
+            'package_max_length' => 1024 * 1024 * 20,
         ],
     ],
 
@@ -83,11 +89,11 @@ return [
             ],
             // 连接池资源配置
             'resource' => [
-                'host'     => imiGetEnv('KM_MAIN_DB_HOST', '127.0.0.1'),
-                'port'     => imiGetEnv('KM_MAIN_DB_PORT', 3306),
-                'username' => imiGetEnv('KM_MAIN_DB_USERNAME', 'root'),
-                'password' => imiGetEnv('KM_MAIN_DB_PASSWORD', 'password'),
-                'database' => imiGetEnv('KM_MAIN_DB_DATABASE', 'dbname'),
+                'host'     => env('MAIN_DB_HOST', '127.0.0.1'),
+                'port'     => (int) env('MAIN_DB_PORT', 3306),
+                'username' => env('MAIN_DB_USERNAME', 'root'),
+                'password' => env('MAIN_DB_PASSWORD', 'password'),
+                'database' => env('MAIN_DB_DATABASE', 'dbname'),
                 'charset'  => 'utf8mb4',
             ],
         ],
@@ -105,8 +111,8 @@ return [
             ],
             // 连接池资源配置
             'resource' => [
-                'host'      => '127.0.0.1',
-                'port'      => 6379,
+                'host'      => env('REDIS_HOST', '127.0.0.1'),
+                'port'      => (int) env('REDIS_PORT', 6379),
                 'password'  => null,
             ],
         ],
@@ -150,5 +156,10 @@ return [
     // atmoic 配置
     'atomics'    =>  [
         // 'atomicLock'   =>  1,
+    ],
+
+    // 验证器
+    'validation' => [
+        'exception' => ValidatorException::class,
     ],
 ];

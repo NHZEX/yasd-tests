@@ -1,7 +1,9 @@
 <?php
 
+use Imi\Log\Handler\Console;
 use Imi\Log\Handler\File;
 use Imi\Log\LogLevel;
+use function MyApp\is_debug;
 
 $rootPath = dirname(__DIR__) . '/';
 
@@ -21,12 +23,47 @@ return [
         'excludePaths'    =>    [
             $rootPath . '.git',
             $rootPath . '.idea',
+            $rootPath . '.runtime',
             $rootPath . 'bin',
             $rootPath . 'logs',
+            $rootPath . 'phinx',
+            $rootPath . 'storage',
         ], // 要排除的路径数组，支持通配符*
     ],
     'Logger'    =>    [
         'exHandlers'    =>    [
+            [
+                'class'     => Console::class,
+                'options'   => [
+                    'levels'    => [
+                        LogLevel::INFO,
+                    ],
+                    'format'    => '{Y}-{m}-{d} {H}:{i}:{s} [{level}] {message}',
+                ],
+            ],
+            [
+                'class'     => Console::class,
+                'options'   => [
+                    'levels' => [
+                        LogLevel::DEBUG,
+                        LogLevel::NOTICE,
+                        LogLevel::WARNING,
+                    ],
+                ],
+            ],
+            [
+                'class'     => Console::class,
+                'options'   => [
+                    'levels' => [
+                        LogLevel::ALERT,
+                        LogLevel::CRITICAL,
+                        LogLevel::EMERGENCY,
+                        LogLevel::ERROR,
+                    ],
+                    'format' => '{Y}-{m}-{d} {H}:{i}:{s} [{level}] {message} {errorFile}:{errorLine}' . PHP_EOL . 'Stack trace:' . PHP_EOL . '{trace}',
+                    'length' => 1024,
+                ],
+            ],
             // info 级别日志不输出trace
             [
                 'class'        =>    File::class,
@@ -56,5 +93,14 @@ return [
                 ],
             ]
         ],
+        'coreHandlers'    =>    [
+            // 清空内置日志配置
+        ],
+    ],
+    'ErrorLog' => [
+        'backtraceLimit' => 10,
+    ],
+    'DbQueryLog' => [
+        'enable' => is_debug(),
     ],
 ];

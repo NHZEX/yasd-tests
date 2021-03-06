@@ -1,5 +1,5 @@
 <?php
-namespace ImiApp\ApiServer;
+namespace MyApp\MainServer;
 
 use Imi\Main\BaseMain;
 

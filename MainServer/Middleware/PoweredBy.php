@@ -1,9 +1,9 @@
 <?php
-namespace ImiApp\ApiServer\Middleware;
+namespace MyApp\MainServer\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**

@@ -1,10 +1,9 @@
 <?php
-namespace ImiApp\Listener;
+namespace MyApp\Listener;
 
+use Imi\Bean\Annotation\Listener;
 use Imi\Event\EventParam;
 use Imi\Event\IEventListener;
-use Imi\Process\ProcessManager;
-use Imi\Bean\Annotation\Listener;
 
 /**
  * @Listener(eventName="IMI.SERVERS.CREATE.AFTER")

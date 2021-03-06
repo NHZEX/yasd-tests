@@ -1,11 +1,12 @@
 <?php
-namespace ImiApp\ApiServer\Controller;
+namespace MyApp\MainServer\Controller;
 
 use Imi\Controller\HttpController;
-use Imi\Server\View\Annotation\View;
-use Imi\Server\Route\Annotation\Route;
+use Imi\Db\Db;
 use Imi\Server\Route\Annotation\Action;
 use Imi\Server\Route\Annotation\Controller;
+use Imi\Server\Route\Annotation\Route;
+use Imi\Server\View\Annotation\View;
 
 /**
  * @Controller("/")
@@ -16,14 +17,13 @@ class IndexController extends HttpController
     /**
      * @Action
      * @Route("/")
-     * @View(renderType="html")
      *
      * @return array
      */
     public function index()
     {
         return [
-            'hello' =>  'imi',
+            'hello' =>  'imi1',
             'time'  =>  date('Y-m-d H:i:s', time()),
         ];
     }
@@ -34,8 +34,10 @@ class IndexController extends HttpController
      */
     public function api($time)
     {
+        $status = Db::query()->execute('SHOW STATUS');
         return [
-            'hello' =>  'imi',
+            'hello' =>  'imi2',
+            'info' => $status->getArray(),
             'time'  =>  date('Y-m-d H:i:s', time()),
         ];
     }
