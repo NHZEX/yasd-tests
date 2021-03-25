@@ -24,7 +24,6 @@ ENV PHP_VARS /usr/local/etc/php/conf.d/docker-vars.ini
 
 WORKDIR /opt/serv
 COPY . /opt/serv
-COPY .env /opt/serv
 
 RUN set -eux \
     && rm -rf .runtime yasd-7f00cb8a.zip \
